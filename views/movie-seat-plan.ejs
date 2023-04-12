@@ -1,0 +1,920 @@
+<%-include("header.ejs")-%>
+
+<style>
+  .seat {
+    border: 1px solid;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 10px;
+  }
+</style>
+
+<!-- *******************     Script Start     ******************************* -->
+<script>
+  seat_array = [];
+  price_array = [];
+
+  var total_amount;
+
+  function myfunc(myvar) {
+    let ans = myvar.attributes.for.value;
+    let ans1 = ans.split("#");
+
+    let position = seat_array.indexOf(ans1[0]);
+    let price_pos = price_array.indexOf(ans1[1]);
+
+    // for pushing in array
+    if (position == -1) {
+      seat_array.push(ans1[0]);
+      price_array.push(ans1[1]);
+
+      // change image code
+      if(ans1[1]==500){
+        myvar.src = "./assets/images/movie/sofa-booked.png";
+      }else if(ans1[1]==300){
+        myvar.src = "./assets/images/movie/seat02-booked.png";
+      }else{
+        myvar.src = "./assets/images/movie/seat01-booked.png";
+      }
+    } else {
+      if (position >= 0) {
+        // Substrac seats from array code
+        for (let i = position; i < seat_array.length - 1; i++) {
+          seat_array[i] = seat_array[i + 1];
+        }
+        seat_array.length = seat_array.length - 1;
+
+        // change image code
+      if(ans1[1]==500){
+        myvar.src = "./assets/images/movie/sofa-free.png";
+      }else if(ans1[1]==300){
+        myvar.src = "./assets/images/movie/seat02-free.png";
+      }else{
+        myvar.src = "./assets/images/movie/seat01-free.png";
+      }
+      }
+      // Substrac Price from array code
+      if (price_pos >= 0) {
+        for (let i = price_pos; i < price_array.length - 1; i++) {
+          price_array[i] = price_array[i + 1];
+        }
+        price_array.length = price_array.length - 1;
+      }
+    }
+    //     :::   SHOW ANSWER     :::
+    var final_no = seat_array.join(",");
+    document.getElementById("no").innerHTML = final_no;
+    document.getElementById("no1").value = final_no;
+
+    var final_amount = price_array.join("+");
+    total_amount = eval(final_amount);
+
+    if (typeof total_amount == "undefined") {
+      total_amount = "";
+    }
+    document.getElementById("amount").innerHTML = total_amount;
+    document.getElementById("amount1").value = total_amount;
+  }
+
+
+</script>
+<!-- *******************     Script End     ******************************* -->
+
+<!-- ==========Banner-Section========== -->
+<section
+  class="details-banner hero-area bg_img seat-plan-banner"
+  data-background="assets/images/banner/banner04.jpg"
+>
+  <div class="container">
+    <div class="details-banner-wrapper">
+      <div class="details-banner-content style-two">
+        <h3 class="title">Venus</h3>
+        <div class="tags">
+          <a href="#0">City Walk</a>
+          <a href="#0">English - 2D</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==========Banner-Section========== -->
+
+
+
+<!-- ==========Page-Title========== -->
+<form class="account-form" action="movie-seat-plan" method="post">
+  <section class="page-title bg-one">
+    <div class="container">
+      <div class="page-title-area">
+        <div class="item md-order-1">
+          <a href="movie-details" class="custom-button back-button">
+            <i class="flaticon-double-right-arrows-angles"></i>back
+          </a>
+        </div>
+        <div class="item date-item">
+          <input type="date"  class="date_input" id="myDate" name="showdate">
+          <!-- *************************     Today date    ************************** -->
+          <script>
+            const today = new Date().toISOString().substr(0, 10);
+            document.querySelector("#myDate").value = today;
+          </script>
+            <!-- *************************     Today date    ************************** -->
+          <!-- <input type="date" class="date_input" name="showdate" /> -->
+        </div>
+        <div class="item date-item">
+          <select class="select-bar" name="showtime">
+            <option value="09:40">09:40</option>
+            <option value="13:45">13:45</option>
+            <option value="15:45">15:45</option>
+            <option value="19:50">19:50</option>
+          </select>
+        </div>
+
+        <div class="item">
+          <h5
+            id="countdown"
+            style="font-size: 29px; color: #31d7a9; font-weight: 600"
+          >
+            9:00
+          </h5>
+          <!--****************************           Countdown Code           ****************************-->
+          <script>
+            const starttingMinutes = 9;
+            let time = starttingMinutes * 60;
+            const countdownEL = document.getElementById("countdown");
+            setInterval(updateCountdown, 1000);
+            function updateCountdown() {
+              const minutes = Math.floor(time / 60);
+              let seconds = time % 60;
+              seconds = seconds < 10 ? "0" + seconds : seconds;
+              countdownEL.innerHTML = `${minutes}:${seconds}`;
+              time--;
+            }
+          </script>
+          <!--****************************           Countdown Code           *****************************-->
+          <p style="font-size: small; color: #31d7a9">Mins Left</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==========Page-Title========== -->
+
+  <!-- ==========Movie-Section========== -->
+  <div class="seat-plan-section padding-bottom padding-top">
+    <div class="container">
+      <div class="screen-area">
+        <h4 class="screen">screen</h4>
+        <div class="screen-thumb">
+          <img src="assets/images/movie/screen-thumb.png" alt="movie" />
+        </div>
+        <h5 class="subtitle">silver plus</h5>
+        <div class="screen-wrapper">
+          <ul class="seat-area">
+            <li class="seat-line">
+              <span>G</span>
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G1#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G1</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G2#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G2</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G3#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G3</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G4#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G4</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G5#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G5</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G6#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G6</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G7#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G7</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G8#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G8</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G9#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G9</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G10#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G10</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G11#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G11</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G12#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G12</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G13#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G13</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="G14#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">G14</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>G</span>
+            </li>
+            <li class="seat-line">
+              <span>f</span>
+
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F1#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F1</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F2#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F2</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F3#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F3</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F4#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F4</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F5#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F5</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F6#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F6</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F7#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F7</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F8#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F8</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F9#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F9</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F10#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F10</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F11#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F11</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F12#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F12</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F13#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F13</span>
+                    </li>
+                    <li class="single-seat seat-free">
+                      <img
+                        src="assets/images/movie/seat01-free.png"
+                        alt="seat"
+                        for="F14#100"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">F14</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>f</span>
+            </li>
+          </ul>
+        </div>
+        <h5 class="subtitle">Golden plus</h5>
+        <div class="screen-wrapper">
+          <ul class="seat-area couple">
+            <li class="seat-line">
+              <span>e</span>
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E1,E2#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e1 e2</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E3,E4#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e3 e4</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E5,E6#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e5 e6</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E7,E8#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e7 e8</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E9,E10#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e9 e10</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E11#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e11</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="E12#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">e12</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>e</span>
+            </li>
+            <li class="seat-line">
+              <span>d</span>
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D1,D2#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d1 d2</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D3,D4#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d3 d4</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D5,D6#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d5 d6</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D7,D8#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d7 d8</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D9,D10#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d9 d10</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D11#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d11</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="D12#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">d12</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>d</span>
+            </li>
+            <li class="seat-line">
+              <span>c</span>
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C1,C2#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c1 c2</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C3,C4#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c3 c4</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C5,C6#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c5 c6</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C7,C8#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c7 c8</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C9,C10#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c9 c10</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C11#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c11</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/seat02-free.png"
+                        alt="seat"
+                        for="C12#300"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">c12</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>c</span>
+            </li>
+            <br>
+            <br>
+            <li class="seat-line">
+              <span>b</span>
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B1#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b1</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B2#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b2</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B3#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b3</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B4#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b4</span>
+                    </li>
+
+
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B5#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b5</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B6#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b6</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="B7#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">b7</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>b</span>
+            </li>
+            <li class="seat-line">
+              <span>a</span>
+              <ul class="seat--area">
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A1#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a1</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A2#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a2</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A3#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a3</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A4#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a4</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A5#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a5</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="front-seat">
+                  <ul>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A61#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a6</span>
+                    </li>
+                    <li class="single-seat seat-free-two">
+                      <img
+                        src="assets/images/movie/sofa-free.png"
+                        alt="seat"
+                        for="A7#500"
+                        onclick="myfunc(this)"
+                      />
+                      <span class="sit-num">a7</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <span>a</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="proceed-book bg_img"
+        data-background="assets/images/movie/movie-bg-proceed.jpg"
+      >
+        <div class="proceed-to-book">
+          <div class="book-item">
+            <span>You have Choosed Seat</span>
+            <h3 class="title" id="no"></h3>
+            <input
+              class="title"
+              style="display: none"
+              name="seats_no"
+              type="text"
+              id="no1"
+            />
+          </div>
+          <div class="book-item">
+            <span>total price</span>
+            <h3 class="title" id="amount"></h3>
+            <input
+              class="title"
+              style="display: none"
+              name="total_amount"
+              type="text"
+              id="amount1"
+            />
+          </div>
+          <div class="book-item">
+            <input type="submit" class="custom-button" value="proceed" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- ==========Movie-Section========== -->
+
+<%-include("footer.ejs")-%>

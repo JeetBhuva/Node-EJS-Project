@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Mirrored from pixner.net/boleto/demo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Mar 2023 10:11:06 GMT -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/flaticon.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="assets/css/odometer.css" />
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="assets/css/nice-select.css" />
+    <link rel="stylesheet" href="assets/css/jquery.animatedheadline.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <link
+      rel="shortcut icon"
+      href="assets/images/favicon.png"
+      type="image/x-icon"
+    />
+
+    <title>Boleto - Online Ticket Booking Website HTML Template</title>
+  </head>
+
+  <body>
+    <!-- ==========Preloader========== -->
+    <div class="preloader">
+      <div class="preloader-inner">
+        <div class="preloader-icon">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- ==========Preloader========== -->
+    <!-- ==========Overlay========== -->
+    <div class="overlay"></div>
+    <a href="/movie-details" class="scrollToTop">
+      <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- ==========Overlay========== -->
+
+    <!-- ==========Header-Section========== -->
+    <header class="header-section">
+      <div class="container">
+        <div class="header-wrapper">
+          <div class="logo">
+            <a href="index.html">
+              <img src="assets/images/logo/logo.png" alt="logo" />
+            </a>
+          </div>
+          <ul class="menu">
+            <li>
+              <a href="/movie-details" class="active">Home</a>
+              <ul class="submenu">
+                <li>
+                  <a href="/movie-details" class="active">Home One</a>
+                </li>
+                <li>
+                  <a href="/movie-details">Home Two</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/movie-details">movies</a>
+              <ul class="submenu">
+                <li>
+                  <a href="movie-grid">View All</a>
+                </li>
+                <!-- <li>
+                                <a href="movie-list.html">Movie List</a>
+                            </li> -->
+                <li>
+                  <a href="movie-details">Movie Details</a>
+                </li>
+                <!-- <li>
+                                <a href="movie-details-2.html">Movie Details 2</a>
+                            </li> -->
+                <!-- <li>
+                                <a href="movie-ticket-plan.html">Movie Ticket Plan</a>
+                            </li> -->
+                <!-- <li>
+                                <a href="movie-seat-plan.html">Movie Seat Plan</a>
+                            </li> -->
+                <!-- <li>
+                                <a href="movie-checkout.html">Movie Checkout</a>
+                            </li> -->
+                <!-- <li>
+                                <a href="popcorn.html">Movie Food</a>
+                            </li> -->
+              </ul>
+            </li>
+            <li>
+              <a href="/movie-details">events</a>
+              <ul class="submenu">
+                <li>
+                  <a href="events.html">Events</a>
+                </li>
+                <li>
+                  <a href="event-details.html">Event Details</a>
+                </li>
+                <li>
+                  <a href="event-speaker.html">Event Speaker</a>
+                </li>
+                <li>
+                  <a href="event-ticket.html">Event Ticket</a>
+                </li>
+                <li>
+                  <a href="event-checkout.html">Event Checkout</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/movie-details">sports</a>
+              <ul class="submenu">
+                <li>
+                  <a href="sports.html">Sports</a>
+                </li>
+                <li>
+                  <a href="sport-details.html">Sport Details</a>
+                </li>
+                <li>
+                  <a href="sports-ticket.html">Sport Ticket</a>
+                </li>
+                <li>
+                  <a href="sports-checkout.html">Sport Checkout</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/movie-details">pages</a>
+              <ul class="submenu">
+                <li>
+                  <a href="about.html">About Us</a>
+                </li>
+                <li>
+                  <a href="apps-download.html">Apps Download</a>
+                </li>
+                <li>
+                  <a href="sign-in">Sign In</a>
+                </li>
+                <li>
+                  <a href="sign-up">Sign Up</a>
+                </li>
+                <li>
+                  <a href="404.html">404</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/movie-details">blog</a>
+              <ul class="submenu">
+                <li>
+                  <a href="blog.html">Blog</a>
+                </li>
+                <li>
+                  <a href="blog-details.html">Blog Single</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="contact.html">contact</a>
+            </li>
+            <!-- <li class="header-button pr-0">
+              <form action="logout" method="post">
+                <input type="submit" value="logout" />
+              </form>
+            </li> -->
+            <% if(data==undefined) { %>
+            <li class="header-button pr-0">
+              <a href="sign-up">join us</a>
+            </li>
+            <% } else { %>
+            <li class="header-button pr-0">
+              <form action="logout" method="post">
+                <input type="submit" value="Logout" />
+              </form>
+            </li>
+            <% } %>
+          </ul>
+          <div class="header-bar d-lg-none">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>
